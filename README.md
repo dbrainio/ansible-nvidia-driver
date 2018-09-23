@@ -26,7 +26,7 @@ Example Playbook
 ```yml
 - hosts: gpu_servers
   roles:
-     - tangentspace.nvidia-driver
+     - tangentspace.nvidia_driver
 ```
 
 License
