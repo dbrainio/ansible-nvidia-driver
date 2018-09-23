@@ -1,0 +1,17 @@
+galaxy_info:
+  role_name: nvidia-driver
+  author: Keith Clawson
+  description: Install the NVIDIA driver on Ubuntu 18.04
+
+  license: BSD
+
+  min_ansible_version: 1.2
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic
+
+  galaxy_tags: []
+
+dependencies: []

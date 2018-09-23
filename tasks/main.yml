@@ -1,0 +1,25 @@
+---
+- name: Add repository with recent GPU drivers
+  apt_repository:
+    repo: ppa:graphics-drivers/ppa
+
+- name: Install NVIDIA drivers and cuda packages
+  apt: pkg={{item}} state=present
+  with_items:
+    - nvidia-{% if nvidia_driver_headless %}headless-{% endif %}{{nvidia_driver_version}}
+    - nvidia-utils-{{nvidia_driver_version}}
+
+- name: Blacklist the nouveau kernel module
+  kernel_blacklist:
+    name: nouveau
+    state: present
+
+- name: Unload the nouveau kernel module
+  modprobe:
+    name: nouveau
+    state: absent
+
+- name: Load the nvidia kernel module
+  modprobe:
+    name: nvidia
+    state: present
