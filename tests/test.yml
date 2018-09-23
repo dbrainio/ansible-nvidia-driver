@@ -2,7 +2,7 @@
 - hosts: tensor
   become: true
   roles:
-    - ..
+    - ../..
 
   tasks:
 
