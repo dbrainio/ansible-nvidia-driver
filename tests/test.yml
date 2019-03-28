@@ -1,15 +1,5 @@
 ---
-- hosts: tensor
+- hosts: gpu
   become: true
   roles:
     - ../..
-
-  tasks:
-
-  - name: run nvidia-smi
-    command: nvidia-smi
-    register: nvidia_smi_result
-    changed_when: false
-
-  - debug:
-      var: nvidia_smi_result.stdout_lines

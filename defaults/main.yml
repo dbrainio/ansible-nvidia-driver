@@ -1,3 +1,2 @@
-driver_version: 396
+driver_version: 418
 nvidia_driver_headless: false
-nvidia_driver_package_name: nvidia-{% if nvidia_driver_headless %}headless-{% else %}driver-{% endif %}{{driver_version}}

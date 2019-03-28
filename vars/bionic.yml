@@ -1,0 +1,6 @@
+driver_package_names_install: 
+  - nvidia-{% if nvidia_driver_headless %}headless-{% else %}driver-{% endif %}{{driver_version}}
+  - nvidia-utils-{{driver_version}}
+driver_package_names_remove:
+  - nvidia-3*
+  - nvidia-driver-*

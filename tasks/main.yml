@@ -3,25 +3,24 @@
     repo: ppa:graphics-drivers/ppa
     state: present
 
+- name: Include os version-specific vars 
+  include_vars: "{{ ansible_distribution_release }}.yml"
+
 - name: Check if required package version is already present
-  shell: dpkg --get-selections | grep {{nvidia_driver_package_name}} | wc -l
-  register: package_state 
+  shell: dpkg --get-selections | grep {{driver_package_names_install[0]}} | wc -l
+  register: nvidia_driver_need_remove 
 
 - name: Remove old NVIDIA driver
   apt:
-    pkg:
-        - nvidia-driver*
-        - nvidia-3*
+    pkg: "{{driver_package_names_remove}}"
     state: absent
     purge: yes
     autoremove: yes
-  when: package_state.stdout == "0"
+  when: nvidia_driver_need_remove.stdout == "0"
 
 - name: Install NVIDIA driver and utils
   apt:
-    pkg: 
-        - "{{nvidia_driver_package_name }}"
-        - "nvidia-utils-{{driver_version}}"
+    pkg: "{{ driver_package_names_install }}"
     state: present
     update_cache: yes
     autoremove: yes
