@@ -1,25 +1,27 @@
----
 - name: Add repository with recent GPU drivers
   apt_repository:
     repo: ppa:graphics-drivers/ppa
-
-- name: Install NVIDIA drivers and cuda packages
-  apt: pkg={{item}} state=present
-  with_items:
-    - nvidia-{% if nvidia_driver_headless %}headless-{% endif %}{{nvidia_driver_version}}
-    - nvidia-utils-{{nvidia_driver_version}}
-
-- name: Blacklist the nouveau kernel module
-  kernel_blacklist:
-    name: nouveau
     state: present
 
-- name: Unload the nouveau kernel module
-  modprobe:
-    name: nouveau
+- name: Check if required package version is already present
+  shell: dpkg --get-selections | grep {{nvidia_driver_package_name}} | wc -l
+  register: package_state 
+
+- name: Remove old NVIDIA driver
+  apt:
+    pkg:
+        - nvidia-driver*
+        - nvidia-3*
     state: absent
+    purge: yes
+    autoremove: yes
+  when: package_state.stdout == "0"
 
-- name: Load the nvidia kernel module
-  modprobe:
-    name: nvidia
+- name: Install NVIDIA driver and utils
+  apt:
+    pkg: 
+        - "{{nvidia_driver_package_name }}"
+        - "nvidia-utils-{{driver_version}}"
     state: present
+    update_cache: yes
+    autoremove: yes

@@ -1,6 +1,6 @@
 galaxy_info:
   role_name: nvidia_driver
-  author: Keith Clawson
+  author: Keith Clawson & hexfaker
   description: Install the NVIDIA driver on Ubuntu 18.04
 
   license: BSD
