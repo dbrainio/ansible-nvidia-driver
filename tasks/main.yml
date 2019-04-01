@@ -21,6 +21,7 @@
 - name: Install NVIDIA driver and utils
   apt:
     pkg: "{{ driver_package_names_install }}"
+    install_recommends: no
     state: present
     update_cache: yes
     autoremove: yes

@@ -3,3 +3,5 @@
   become: true
   roles:
     - ../..
+  vars:
+    nvidia_driver_headless: "{{headless}}"
